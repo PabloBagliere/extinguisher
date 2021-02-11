@@ -1,12 +1,14 @@
-import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from 'App';
+import * as React from 'react';
 import './index.scss';
+import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
+import App from 'App';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+    <CssBaseline />
     <App />
   </React.StrictMode>,
   document.getElementById('root'),

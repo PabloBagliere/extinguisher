@@ -1,25 +1,19 @@
 import * as React from 'react';
-import logo from 'logo.svg';
+import { Route, Switch } from 'wouter';
+import Login from 'pages/Login';
+import Home from 'pages/Home';
+import PageError from 'pages/PageError';
 
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
   return (
     <div className={styles.conteiner}>
-      <header className={styles.header}>
-        <img alt="logo" className={styles.logo} src={logo} />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className={styles.link}
-          href="https://reactjs.org"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route component={Home} path="/" />
+        <Route component={Login} path="/login" />
+        <Route component={PageError} path="/:rest*" />
+      </Switch>
     </div>
   );
 };
