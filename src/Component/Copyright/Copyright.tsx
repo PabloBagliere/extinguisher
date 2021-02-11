@@ -5,7 +5,7 @@ const Copyright: React.FC = () => {
   return (
     <Typography align="center" color="textSecondary" variant="body2">
       {'Copyright © '}
-      <Link color="inherit" href="www.linkedin.com/in/pablo-bagliere/">
+      <Link color="inherit" href="https://www.linkedin.com/in/pablo-bagliere/">
         Pablo Bagliere
       </Link>{' '}
       {new Date().getFullYear()}
