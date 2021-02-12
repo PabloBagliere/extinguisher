@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,47 +11,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import RenderMobile from './RenderMobile';
 import RenderMenu from './RenderMenu';
 import AvatarPersonal from './AvatarPersonal';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    grow: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '20ch',
-      },
-    },
-    sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex',
-      },
-    },
-    sectionMobile: {
-      display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-  }),
-);
+import DrawerPersonal from './DrawerPersonal';
+import useStyles from './styles';
 
 const Navbar: React.FC = () => {
   const menuId = 'menu';
@@ -60,6 +20,7 @@ const Navbar: React.FC = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openDrawer, setOpenDrawer] = React.useState<boolean>(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -82,65 +43,71 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            aria-label="open drawer"
-            className={classes.menuButton}
-            color="inherit"
-            edge="start"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography noWrap className={classes.title} variant="h6">
-            Extintores N°468
-          </Typography>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+    <>
+      <div className={classes.grow}>
+        <AppBar position="static">
+          <Toolbar>
             <IconButton
-              aria-controls={menuId}
-              aria-haspopup="true"
-              aria-label="account of current user"
+              aria-label="open drawer"
+              className={classes.menuButton}
               color="inherit"
-              edge="end"
-              onClick={handleProfileMenuOpen}
+              edge="start"
+              onClick={() => {
+                setOpenDrawer(true);
+              }}
             >
-              <AvatarPersonal initials="PB" />
+              <MenuIcon />
             </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              aria-label="show more"
-              color="inherit"
-              onClick={handleMobileMenuOpen}
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <RenderMobile
-        handleMobileMenuClose={handleMobileMenuClose}
-        handleProfileMenuOpen={handleProfileMenuOpen}
-        isMobileMenuOpen={isMobileMenuOpen}
-        mobileMenuId={mobileMenuId}
-        mobileMoreAnchorEl={mobileMoreAnchorEl}
-      />
-      <RenderMenu
-        anchorEl={anchorEl}
-        handleMenuClose={handleMenuClose}
-        isMenuOpen={isMenuOpen}
-        menuId={menuId}
-      />
-    </div>
+            <Typography noWrap className={classes.title} variant="h6">
+              Extintores N°468
+            </Typography>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <IconButton color="inherit">
+                <Badge color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                aria-controls={menuId}
+                aria-haspopup="true"
+                aria-label="account of current user"
+                color="inherit"
+                edge="end"
+                onClick={handleProfileMenuOpen}
+              >
+                <AvatarPersonal initials="PB" />
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                aria-label="show more"
+                color="inherit"
+                onClick={handleMobileMenuOpen}
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <RenderMobile
+          handleMobileMenuClose={handleMobileMenuClose}
+          handleProfileMenuOpen={handleProfileMenuOpen}
+          isMobileMenuOpen={isMobileMenuOpen}
+          mobileMenuId={mobileMenuId}
+          mobileMoreAnchorEl={mobileMoreAnchorEl}
+        />
+        <RenderMenu
+          anchorEl={anchorEl}
+          handleMenuClose={handleMenuClose}
+          isMenuOpen={isMenuOpen}
+          menuId={menuId}
+        />
+      </div>
+      <DrawerPersonal setState={setOpenDrawer} state={openDrawer} />
+    </>
   );
 };
 
