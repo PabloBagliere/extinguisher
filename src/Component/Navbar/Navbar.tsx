@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,8 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Avatar } from '@material-ui/core';
-import { deepOrange } from '@material-ui/core/colors';
+import AvatarPersonal from 'Component/AvatarPersonal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,10 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         display: 'none',
       },
-    },
-    orange: {
-      color: theme.palette.getContrastText(deepOrange[500]),
-      backgroundColor: deepOrange[500],
     },
   }),
 );
@@ -124,7 +119,7 @@ const Navbar: React.FC = () => {
           aria-label="account of current user"
           color="inherit"
         >
-          <Avatar className={classes.orange}>PB</Avatar>
+          <AvatarPersonal initials="PB" />
         </IconButton>
         <p>Perfil</p>
       </MenuItem>
@@ -161,7 +156,7 @@ const Navbar: React.FC = () => {
               edge="end"
               onClick={handleProfileMenuOpen}
             >
-              <Avatar className={classes.orange}>PB</Avatar>
+              <AvatarPersonal initials="PB" />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
