@@ -5,12 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import AvatarPersonal from 'Component/AvatarPersonal';
+
+import RenderMobile from './RenderMobile';
+import RenderMenu from './RenderMenu';
+import AvatarPersonal from './AvatarPersonal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,6 +55,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Navbar: React.FC = () => {
+  const menuId = 'menu';
+  const mobileMenuId = 'menu-mobile';
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -77,54 +80,6 @@ const Navbar: React.FC = () => {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = 'menu';
-  const renderMenu = (
-    <Menu
-      keepMounted
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      open={isMenuOpen}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Cerrar sesion</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = 'menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      keepMounted
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      open={isMobileMenuOpen}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notificacion</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          aria-label="account of current user"
-          color="inherit"
-        >
-          <AvatarPersonal initials="PB" />
-        </IconButton>
-        <p>Perfil</p>
-      </MenuItem>
-    </Menu>
-  );
 
   return (
     <div className={classes.grow}>
@@ -172,8 +127,19 @@ const Navbar: React.FC = () => {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      <RenderMobile
+        handleMobileMenuClose={handleMobileMenuClose}
+        handleProfileMenuOpen={handleProfileMenuOpen}
+        isMobileMenuOpen={isMobileMenuOpen}
+        mobileMenuId={mobileMenuId}
+        mobileMoreAnchorEl={mobileMoreAnchorEl}
+      />
+      <RenderMenu
+        anchorEl={anchorEl}
+        handleMenuClose={handleMenuClose}
+        isMenuOpen={isMenuOpen}
+        menuId={menuId}
+      />
     </div>
   );
 };
