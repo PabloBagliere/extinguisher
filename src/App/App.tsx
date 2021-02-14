@@ -3,6 +3,7 @@ import { Route, Switch } from 'wouter';
 import Login from 'pages/Login';
 import Home from 'pages/Home';
 import PageError from 'pages/PageError';
+import Dashboard from 'pages/Dashboard';
 import Navbar from 'Component/Navbar';
 import Copyright from 'Component/Copyright';
 import { AuthContext } from 'Context/userContext';
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Switch>
           <Route component={Home} path="/" />
           <Route component={Login} path="/login" />
+          <Route component={Dashboard} path="/dashboard" />
           <Route component={PageError} path="/:rest*" />
         </Switch>
         <Copyright />
