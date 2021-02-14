@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Badge, IconButton, Menu, MenuItem } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-import AvatarPersonal from '../../AvatarPersonal';
+import AvatarPersonal from '../AvatarPersonal';
 
 interface props {
   mobileMoreAnchorEl: HTMLElement | null;

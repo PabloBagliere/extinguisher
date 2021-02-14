@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
+import app from 'Firebase/Client';
 
 interface props {
   anchorEl: HTMLElement | null;
@@ -7,6 +8,10 @@ interface props {
   isMenuOpen: boolean;
   handleMenuClose: () => void;
 }
+
+const signOut = (): void => {
+  app.auth().signOut();
+};
 
 const RenderMenu: React.FC<props> = ({ anchorEl, menuId, isMenuOpen, handleMenuClose }) => {
   return (
@@ -19,7 +24,7 @@ const RenderMenu: React.FC<props> = ({ anchorEl, menuId, isMenuOpen, handleMenuC
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Cerrar sesion</MenuItem>
+      <MenuItem onClick={signOut}>Cerrar sesion</MenuItem>
     </Menu>
   );
 };

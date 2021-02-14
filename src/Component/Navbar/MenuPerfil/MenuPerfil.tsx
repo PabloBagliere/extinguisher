@@ -3,8 +3,7 @@ import { Badge, IconButton } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-import AvatarPersonal from '../AvatarPersonal';
-
+import AvatarPersonal from './AvatarPersonal';
 import RenderMobile from './RenderMobile';
 import RenderMenu from './RenderMenu';
 import useStyles from './styles';
@@ -19,20 +18,20 @@ const MenuPerfil: React.FC = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
+  const handleMobileMenuClose = (): void => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (): void => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
