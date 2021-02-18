@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import SignupSchema from 'Utils/userValidate';
+import userSchema from 'Utils/Schema/userSchema';
 import app from 'Firebase/Client';
 import { useSnackbar } from 'notistack';
 
@@ -20,7 +20,7 @@ const FormLogin: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { register, errors, handleSubmit } = useForm<UserInput>({
-    resolver: yupResolver(SignupSchema),
+    resolver: yupResolver(userSchema),
   });
   const onSubmit = async (values: UserInput): Promise<void> => {
     setLoading(!loading);
