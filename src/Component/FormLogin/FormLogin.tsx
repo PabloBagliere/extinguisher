@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import userSchema from 'Utils/Schema/userSchema';
 import app from 'Firebase/Client';
@@ -19,7 +19,11 @@ const FormLogin: React.FC = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const { register, errors, handleSubmit } = useForm<UserInput>({
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+  } = useForm<UserInput>({
     resolver: yupResolver(userSchema),
   });
   const onSubmit = async (values: UserInput): Promise<void> => {
@@ -31,6 +35,7 @@ const FormLogin: React.FC = () => {
         setLoading(!loading);
       })
       .catch((error) => {
+        // TODO: not change the value of loading
         enqueueSnackbar(error.message, { variant: 'error' });
         setLoading(!loading);
       });
@@ -38,33 +43,40 @@ const FormLogin: React.FC = () => {
 
   return (
     <form noValidate className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        autoFocus
-        fullWidth
-        required
-        autoComplete="email"
-        error={errors.email ? true : false}
-        helperText={errors.email ? errors.email.message : null}
-        id="email"
-        inputRef={register}
-        label="Email"
-        margin="normal"
+      <Controller
+        control={control}
         name="email"
-        variant="outlined"
+        render={({ field }) => (
+          <TextField
+            fullWidth
+            required
+            autoComplete="email"
+            error={errors.email ? true : false}
+            helperText={errors.email ? errors.email.message : null}
+            label="Email"
+            margin="normal"
+            variant="outlined"
+            {...field}
+          />
+        )}
       />
-      <TextField
-        fullWidth
-        required
-        autoComplete="current-password"
-        error={errors.password ? true : false}
-        helperText={errors.password ? errors.password.message : null}
-        id="password"
-        inputRef={register}
-        label="Contraseña"
-        margin="normal"
+      <Controller
+        control={control}
         name="password"
-        type="password"
-        variant="outlined"
+        render={({ field }) => (
+          <TextField
+            fullWidth
+            required
+            autoComplete="current-password"
+            error={errors.password ? true : false}
+            helperText={errors.password ? errors.password.message : null}
+            label="Contraseña"
+            margin="normal"
+            type="password"
+            variant="outlined"
+            {...field}
+          />
+        )}
       />
       <Button
         fullWidth

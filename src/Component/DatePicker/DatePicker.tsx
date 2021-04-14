@@ -15,7 +15,7 @@ const DatePicker: React.FC<props> = ({ control, name, label }) => {
       <Controller
         control={control}
         name={name}
-        render={({ ...rest }) => (
+        render={({ field }) => (
           <KeyboardDatePicker
             KeyboardButtonProps={{
               'aria-label': 'change date',
@@ -24,7 +24,7 @@ const DatePicker: React.FC<props> = ({ control, name, label }) => {
             id={name}
             label={label}
             margin="normal"
-            {...rest}
+            {...field}
           />
         )}
       />
