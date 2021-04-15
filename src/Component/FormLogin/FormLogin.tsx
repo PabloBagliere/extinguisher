@@ -19,6 +19,38 @@ const FormLogin: React.FC = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
 
+  const onSubmit = async (values: UserInput): Promise<void> => {
+    setLoading(true);
+    await app
+      .auth()
+      .signInWithEmailAndPassword(values.email, values.password)
+      .catch((error) => {
+        switch (error.code) {
+          case 'auth/user-not-found':
+            enqueueSnackbar(
+              'Contraseña o email invalido si sigue comuníquese con el administrador',
+              { variant: 'error' },
+            );
+            break;
+          case 'auth/wrong-password':
+            enqueueSnackbar(
+              'Contraseña o email invalido si sigue comuníquese con el administrador',
+              { variant: 'error' },
+            );
+            break;
+          case 'auth/too-many-requests':
+            enqueueSnackbar(
+              'Cuenta bloqueada por muchos intentos, comuníquese con el administrador',
+              { variant: 'error' },
+            );
+            break;
+          default:
+            enqueueSnackbar(error.message, { variant: 'error' });
+            break;
+        }
+      })
+      .finally(() => setLoading(false));
+  };
   const {
     formState: { errors },
     control,
@@ -26,20 +58,6 @@ const FormLogin: React.FC = () => {
   } = useForm<UserInput>({
     resolver: yupResolver(userSchema),
   });
-  const onSubmit = async (values: UserInput): Promise<void> => {
-    setLoading(!loading);
-    await app
-      .auth()
-      .signInWithEmailAndPassword(values.email, values.password)
-      .then(() => {
-        setLoading(!loading);
-      })
-      .catch((error) => {
-        // TODO: not change the value of loading
-        enqueueSnackbar(error.message, { variant: 'error' });
-        setLoading(!loading);
-      });
-  };
 
   return (
     <form noValidate className={classes.form} onSubmit={handleSubmit(onSubmit)}>

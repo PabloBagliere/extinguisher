@@ -20,7 +20,7 @@ const Login: React.FC = () => {
   }, [ContextUser?.user, navigate]);
 
   return (
-    <SnackbarProvider maxSnack={2}>
+    <SnackbarProvider preventDuplicate maxSnack={2}>
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
